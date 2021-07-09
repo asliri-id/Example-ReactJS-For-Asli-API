@@ -82,13 +82,6 @@ const Form = ({ data = {} }) => {
           />
         ))}
 
-        {/* <input
-          id="inputUrl"
-          {...register("selfie_photo")}
-          onChange={(e) => setPictureUrl(e.target.value)}
-          value={pictureUrl}
-        /> */}
-
         <ButtonContainer>
           <Button
             variant="contained"

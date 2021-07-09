@@ -6,7 +6,6 @@ const Liveness = () => {
   const videoRef = useRef();
   const captureRef = useRef();
   const liveImageRef = useRef([]);
-  const [pictureUrl, setPictureUrl] = useState("testing");
 
   const startVideo = useRef();
   startVideo.current = () => {
@@ -37,16 +36,6 @@ const Liveness = () => {
         console.log(err);
       });
   };
-
-  // const startLiveness = () => {
-  //   for (let i = 0; i < 7; i++) {
-  //     setTimeout(() => {
-  //       capture();
-  //     }, 500);
-  //   }
-
-  //   sendData();
-  // };
 
   const startLiveness = () => {
     liveImageRef.current = [];
