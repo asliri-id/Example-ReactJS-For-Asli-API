@@ -9,6 +9,17 @@ autoplay
 
 `;
 
+export const LivenessContainer = styled.div`
+  margin: auto;
+  padding: 50px 300px;
+`;
+
+export const LiveCapture = styled.canvas`
+  display: none;
+  width: 1920px;
+  height: 1080px;
+`;
+
 export const KtpContainer = styled.img`
   height: 200px;
   width: 320px;

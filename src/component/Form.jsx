@@ -16,14 +16,20 @@ const Form = ({ data = {} }) => {
   const [takeSelfie, setTakeSelfie] = useState(false);
   const [retake, setRetake] = useState(true);
   const [showPic, setShowPic] = useState(false);
-  const [pictureUrl, setPictureUrl] = useState();
+  const [pictureUrl, setPictureUrl] = useState("testing");
 
   const { register, handleSubmit, control } = useForm({
     defaultValues: { ...data },
   });
-  const onSubmit = async (data) => {
-    await axios
-      .post("http://localhost:5000/profesional", data)
+  const onSubmit = (info) => {
+    axios
+      .post("http://localhost:5000/profesional", {
+        ...info,
+        name: info.nama,
+        birthdate: info.tanggal_lahir,
+        birthplace: info.tempat_lahir,
+        selfie_photo: pictureUrl,
+      })
       .then((res) => {
         console.log(res.data);
       })
@@ -55,9 +61,8 @@ const Form = ({ data = {} }) => {
     );
 
     const capturedUrl = captureRef.current.toDataURL();
-    const capturedUrl2 = capturedUrl.substring(22, capturedUrl.length);
-    setPictureUrl(capturedUrl2);
-    document.getElementById("inputUrl").focus();
+
+    setPictureUrl(capturedUrl.substring(22, capturedUrl.length));
   };
 
   return (
@@ -77,12 +82,12 @@ const Form = ({ data = {} }) => {
           />
         ))}
 
-        <input
+        {/* <input
           id="inputUrl"
           {...register("selfie_photo")}
           onChange={(e) => setPictureUrl(e.target.value)}
           value={pictureUrl}
-        />
+        /> */}
 
         <ButtonContainer>
           <Button

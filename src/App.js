@@ -3,6 +3,7 @@ import { KtpContainer } from "./style/styles";
 import Form from "./component/Form";
 import { Button } from "@material-ui/core";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Liveness from "./Liveness";
 
 const axios = require("axios");
 
@@ -29,9 +30,9 @@ function App() {
     reader.readAsDataURL(file);
   };
 
-  const getOcr = async () => {
+  const getOcr = () => {
     setIsProcessing(true);
-    await axios
+    axios
       .post("http://localhost:5000/ocr", { image: base64String.current })
       .then((res) => {
         setData(res.data);
@@ -44,34 +45,34 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Router>
+    <Router>
+      <div>
         <Switch>
-          <Route path="/about">
-            <About />
+          <Route path="/liveness">
+            <Liveness />
           </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
+
           <Route path="/">
-            <Home />
+            <h1>OCR</h1>
+            <p>upload ktp</p>
+            <input type="file" name="" id="input" onChange={imageUpload} />
+            {uploaded && (
+              <>
+                <KtpContainer ref={ktpRef} />
+                <Button
+                  variant="contained"
+                  onClick={getOcr}
+                  disabled={isProcessing}
+                >
+                  Run
+                </Button>
+              </>
+            )}
+            {ocrDone && <Form data={data} />}
           </Route>
         </Switch>
-        ;
-      </Router>
-      <h1>OCR</h1>
-      <p>upload ktp</p>
-      <input type="file" name="" id="input" onChange={imageUpload} />
-      {uploaded && (
-        <>
-          <KtpContainer ref={ktpRef} />
-          <Button variant="contained" onClick={getOcr} disabled={isProcessing}>
-            Run
-          </Button>
-        </>
-      )}
-      {ocrDone && <Form data={data} />}
-    </div>
+      </div>
+    </Router>
   );
 }
 
